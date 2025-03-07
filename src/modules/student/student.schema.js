@@ -6,6 +6,7 @@ const studentSchema = {
         email: joi.string().email().required(),
         password: joi.string().min(4).required(),
         profile_image: joi.string().uri().optional(),
+        is2FAEnabled: joi.boolean().optional(),
     }),
     loginStudent: joi.object({
         email: joi.string().email().required(),

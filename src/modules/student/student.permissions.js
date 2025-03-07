@@ -1,3 +1,5 @@
+import { verify } from "crypto";
+
 const studentPermission = {
     registerStudent: {
         path: '/',
@@ -5,6 +7,9 @@ const studentPermission = {
     },
     loginStudent: {
         path: '/login',
+    },
+    verify2FA: {
+        path: '/verify2fa',
     },
     getStudentById: {
         path: '/:id'
