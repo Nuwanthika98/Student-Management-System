@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 const StudentSchema = new mongoose.Schema({
     name: {
@@ -17,7 +17,12 @@ const StudentSchema = new mongoose.Schema({
     },
     profile_image: {
         type: String,
-    }
+    },
+    is2FAEnabled: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 }, {timestamps: true, strict: false});
 
 StudentSchema.pre('save', async function(next){
