@@ -6,6 +6,7 @@ import "dotenv/config";
 import { sendEmail } from "../../services/email/email.service.js";
 import redisClient from "../../services/database/redis.service.js"; 
 import {notifyUser} from '../../services/websocket/websocket.service.js';
+import adminService from "../admin/admin.service.js"; 
 
 const studentService = {
   registerStudent: async (data, files) => {
@@ -35,6 +36,7 @@ const studentService = {
     if (!student) {
       throw new Error("Registration failed!");
     }
+    await adminService.notifyStudentRegistration(student._id);
     const studentObject = student.toObject();
     delete studentObject.password;
 
