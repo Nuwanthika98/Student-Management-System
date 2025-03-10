@@ -1,10 +1,11 @@
-import studentModel from './student.model.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { handleFileUpload } from '../../services/file_uploads/file_upload.service.js';
-import 'dotenv/config';
-import { sendEmail } from '../../services/email/email.service.js';
-import redisClient from '../../services/database/redis.service.js';
+import studentModel from "./student.model.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { handleFileUpload } from "../../services/file_uploads/file_upload.service.js";
+import "dotenv/config";
+import { sendEmail } from "../../services/email/email.service.js";
+import redisClient from "../../services/database/redis.service.js"; 
+import {notifyUser} from '../../services/websocket/websocket.service.js';
 
 const studentService = {
   registerStudent: async (data, files) => {
@@ -135,6 +136,20 @@ const studentService = {
     });
 
     return students;
+  },
+
+  generateAndNotifyUniqueKeys: async () => {
+    const users = await studentModel.find({}, "_id"); 
+
+    for (const user of users) {
+      const uniqueKey = Math.random().toString(36).substring(2, 10); 
+
+      await redisClient.set(`uniqueKey:${user._id}`, uniqueKey, { EX: 300 });
+
+      console.log(`Key for user ${user._id}: ${uniqueKey}`);
+
+      notifyUser(user._id, uniqueKey);
+    }
   },
 };
 

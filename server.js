@@ -4,6 +4,8 @@ import https from 'https';
 import 'dotenv/config';
 import { databaseConnection } from './src/services/database/database.service.js';
 import routes from './routes.js';
+import cronService from './src/services/cron-jobs/cron.service.js';
+import { initWebSocketServer } from './src/services/websocket/websocket.service.js';
 
 const server = express();
 const HTTP_PORT = process.env.HTTP_PORT;
@@ -23,14 +25,17 @@ server.use('/api', routes);
         await databaseConnection(DATABASE_URI);
         console.log("✅ Database Connected!");
 
-        server.listen(HTTP_PORT, () => {
+        const httpServer = await server.listen(HTTP_PORT, () => {
             console.log(`🌐 HTTP Server running on port ${HTTP_PORT}`);
         });
 
-        https.createServer(options, server).listen(HTTPS_PORT, () => {
+        const httpsServer = await https.createServer(options, server).listen(HTTPS_PORT, () => {
             console.log(`🔒 HTTPS Server running on port ${HTTPS_PORT}`);
             
         });
+
+        //await webSocketService.initialize(httpsServer); 
+        initWebSocketServer();
     } catch (error) {
         throw new Error(error.message);
     }
