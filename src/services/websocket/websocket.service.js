@@ -46,4 +46,14 @@ const notifyUser = (user_id, uniqueKey) => {
     }
   };
 
-export { initWebSocketServer, activeUsers, notifyUser };
+  const notifyAdmin = (admin_id, student_id) => {
+    const adminSocket = activeUsers.get(admin_id.toString());
+    
+    if (adminSocket) {
+      adminSocket.send(JSON.stringify({ message: `Student ${student_id} registered` }));
+    } else {
+      console.log(`Admin ${admin_id} is not connected, unable to send message.`);
+    }
+  };
+
+export { initWebSocketServer, activeUsers, notifyUser, notifyAdmin };
