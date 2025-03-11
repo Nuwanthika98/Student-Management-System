@@ -9,6 +9,8 @@ services:
       - "9090:9090"
     env_file:
       - .env
+    volumes:
+      - .${DATABASE_BACKUP_PATH}:${DATABASE_BACKUP_PATH}
     depends_on:
       - redis
     environment:

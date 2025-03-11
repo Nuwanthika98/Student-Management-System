@@ -2,3 +2,4 @@
 /package-lock.json
 .env
 /src/ssl/
+/src/backups/

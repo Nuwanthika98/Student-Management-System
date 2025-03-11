@@ -1,8 +1,16 @@
-# Use an official Node.js runtime as a base image
+# Use the official Node.js image as a base
 FROM node:22
 
 # Set the working directory in the container
 WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && apt-get install -y curl gnupg lsb-release
+
+# Download and install MongoDB tools
+RUN curl -O https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian10-x86_64-100.5.2.deb \
+    && dpkg -i mongodb-database-tools-debian10-x86_64-100.5.2.deb \
+    && rm mongodb-database-tools-debian10-x86_64-100.5.2.deb
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
