@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  student-management:
+    build: .
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "9090:9090"
+    env_file:
+      - .env
+    volumes:
+      - .${DATABASE_BACKUP_PATH}:${DATABASE_BACKUP_PATH}
+    depends_on:
+      - redis
+    environment:
+      - HTTP_PORT=${HTTP_PORT}
+      - HTTPS_PORT=${HTTPS_PORT}
+      - DATABASE_URI=${DATABASE_URI}
+      - SSL_PRIVATE_KEY_PATH=${SSL_PRIVATE_KEY_PATH}
+      - SSL_CERTIFICATE_KEY=${SSL_CERTIFICATE_KEY}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"

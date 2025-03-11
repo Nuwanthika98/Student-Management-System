@@ -1,0 +1,34 @@
+{
+  "name": "student_management_system_backend",
+  "version": "1.0.0",
+  "description": "student management system",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon server.js"
+  },
+  "author": "Nuwanthika Sandaruwani",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "formidable": "^3.5.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7",
+    "redis": "^4.7.0",
+    "socket.io": "^4.8.1",
+    "url": "^0.11.4",
+    "ws": "^8.18.1"
+  }
+}
